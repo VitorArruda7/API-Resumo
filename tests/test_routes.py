@@ -8,9 +8,10 @@ def test_health_check():
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
 
-def test_summarize_route():
-    response = client.post("/summarize", json={"url": "https://example.com"})
+def test_summary_route_real():
+    url = "https://www.bbc.com/portuguese"
+    response = client.post("/summary", json={"url": url})
     assert response.status_code == 200
     data = response.json()
-    assert "title" in data
     assert "summary" in data
+    assert len(data["summary"]) > 0
