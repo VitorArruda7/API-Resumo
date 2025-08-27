@@ -1,6 +1,6 @@
 fastapi
-uvicorn[standard]
-requests
-beautifulsoup4
-transformers
+uvicorn
 pytest
+httpx
+beautifulsoup4
+requests
