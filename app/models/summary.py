@@ -1,7 +1,9 @@
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel
+from typing import Optional
 
 class SummarizeRequest(BaseModel):
-    url: HttpUrl
+    url: Optional[str] = None
+    text: Optional[str] = None
 
 class SummarizeResponse(BaseModel):
     title: str

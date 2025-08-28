@@ -1,25 +1,24 @@
 import requests
 from bs4 import BeautifulSoup
 
-def summarize_url(url: str) -> str:
+def fetch_article_text(url: str) -> str:
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/135.0.0.0 Safari/537.36"
+    }
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
     except Exception as e:
         return f"Erro ao acessar a URL: {e}"
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # Captura parágrafos do texto
     paragraphs = [p.get_text(strip=True) for p in soup.find_all("p") if p.get_text(strip=True)]
 
     if not paragraphs:
         return "Não foi possível encontrar conteúdo relevante para resumir."
 
-    # Junta os parágrafos e pega só os 3 primeiros para resumir
-    content = " ".join(paragraphs[:5])
-
-    # Aqui está um resumo bem simples
-    summary = content[:500] + "..." if len(content) > 500 else content
-
-    return summary
+    content = " ".join(paragraphs[:10])
+    return content
